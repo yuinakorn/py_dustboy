@@ -27,8 +27,8 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/station/{request_key}")
-async def create_station(request_key: str):
+@app.post("/station/")
+async def create_station(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
         try:
             with connection.cursor() as cursor:
