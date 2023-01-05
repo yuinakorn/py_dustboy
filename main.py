@@ -27,7 +27,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/station/")
+@app.post("/station/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_station(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
         try:
@@ -68,7 +68,7 @@ async def create_station(request_key: str = Form()):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
 
 
-@app.post("/value/all/")
+@app.post("/value/all/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_value_all(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
         print(request_key)
@@ -119,7 +119,7 @@ async def create_value_all(request_key: str = Form()):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
 
 
-@app.post("/value/r1/")
+@app.post("/value/r1/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_value_r1(request_key: str = Form()):
     sql = "SELECT dustboy_station.dustboy_id FROM dustboy_station " \
           "INNER JOIN dustboy_value ON dustboy_value.id = dustboy_station.dustboy_id " \
@@ -168,4 +168,3 @@ async def create_value_r1(request_key: str = Form()):
             connection.close()
 
     return {"message": "Value R1 created"}
-
