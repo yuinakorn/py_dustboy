@@ -69,7 +69,7 @@ async def create_station(request_key: str = Form()):
 
 
 @app.post("/value/all/")
-async def create_value(request_key: str = Form()):
+async def create_value_all(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
         print(request_key)
         try:
@@ -120,7 +120,7 @@ async def create_value(request_key: str = Form()):
 
 
 @app.post("/value/r1/")
-async def create_value(request_key: str = Form()):
+async def create_value_r1(request_key: str = Form()):
     sql = "SELECT dustboy_station.dustboy_id FROM dustboy_station " \
           "INNER JOIN dustboy_value ON dustboy_value.id = dustboy_station.dustboy_id " \
           "WHERE dustboy_value.province_code IN ('50','51','52','54','55','56','57','58')"
