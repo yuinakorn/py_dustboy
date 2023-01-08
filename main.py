@@ -63,6 +63,7 @@ async def create_station(request_key: str = Form()):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
         finally:
+            cursor.close()
             connection.close()
     else:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
@@ -115,6 +116,10 @@ async def create_value_all(request_key: str = Form()):
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
+        finally:
+            cursor.close()
+            connection.close()
+
     else:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
 
@@ -165,6 +170,7 @@ async def create_value_r1(request_key: str = Form()):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
         finally:
+            cursor.close()
             connection.close()
 
     return {"message": "Value R1 created"}
