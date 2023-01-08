@@ -125,7 +125,7 @@ async def create_value_all(request_key: str = Form()):
 
 
 @app.post("/value/r1/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
-async def create_value_r1(request_key: str = Form()):
+async def create_value_r1(request_key: str = Form(), pytz=None):
 
     if request_key == config_env['SECRET_KEY']:
         print("Start at " + str(datetime.now()))
@@ -176,6 +176,8 @@ async def create_value_r1(request_key: str = Form()):
             cursor.close()
             connection.close()
 
-    print("Done at " + str(datetime.now()))
+    tz = pytz.timezone('Asia/Bangkok')
+    now = datetime.now(tz)
+    print("End at " + str(now))
 
     return {"message": "Value R1 created"}
