@@ -126,11 +126,14 @@ async def create_value_all(request_key: str = Form()):
 
 @app.post("/value/r1/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_value_r1(request_key: str = Form()):
-    sql = "SELECT dustboy_station.dustboy_id FROM dustboy_station " \
-          "INNER JOIN dustboy_value ON dustboy_value.id = dustboy_station.dustboy_id " \
-          "WHERE dustboy_value.province_code IN ('50','51','52','54','55','56','57','58')"
 
     if request_key == config_env['SECRET_KEY']:
+        print("Start at " + str(datetime.now()))
+
+        sql = "SELECT DISTINCT(dustboy_station.dustboy_id) dustboy_id FROM dustboy_station " \
+              "INNER JOIN dustboy_value ON dustboy_value.id = dustboy_station.dustboy_id " \
+              "WHERE dustboy_value.province_code IN ('50','51','52','54','55','56','57','58')"
+
         try:
             with connection.cursor() as cursor:
                 cursor.execute(sql)
@@ -172,5 +175,7 @@ async def create_value_r1(request_key: str = Form()):
         finally:
             cursor.close()
             connection.close()
+
+    print("Done at " + str(datetime.now()))
 
     return {"message": "Value R1 created"}
