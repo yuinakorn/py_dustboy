@@ -128,7 +128,9 @@ async def create_value_all(request_key: str = Form()):
 async def create_value_r1(request_key: str = Form(), pytz=None):
 
     if request_key == config_env['SECRET_KEY']:
-        print("Start at " + str(datetime.now()))
+        tz = pytz.timezone('Asia/Bangkok')
+        now = datetime.now(tz)
+        print("Start at " + str(now))
 
         sql = "SELECT DISTINCT(dustboy_station.dustboy_id) dustboy_id FROM dustboy_station " \
               "INNER JOIN dustboy_value ON dustboy_value.id = dustboy_station.dustboy_id " \
