@@ -2,6 +2,8 @@ import pymysql as pymysql
 from fastapi import FastAPI, Request, status, HTTPException, Depends, Body, Form
 from dotenv import dotenv_values
 from datetime import datetime, timezone, timedelta
+import datetime
+import pytz
 import os
 import requests
 
@@ -125,11 +127,11 @@ async def create_value_all(request_key: str = Form()):
 
 
 @app.post("/value/r1/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
-async def create_value_r1(request_key: str = Form(), pytz=None):
+async def create_value_r1(request_key: str = Form()):
 
     if request_key == config_env['SECRET_KEY']:
         tz = pytz.timezone('Asia/Bangkok')
-        now = datetime.now(tz)
+        now = datetime.datetime.now(tz)
         print("Start at " + str(now))
 
         sql = "SELECT DISTINCT(dustboy_station.dustboy_id) dustboy_id FROM dustboy_station " \
@@ -179,7 +181,8 @@ async def create_value_r1(request_key: str = Form(), pytz=None):
             connection.close()
 
     tz = pytz.timezone('Asia/Bangkok')
-    now = datetime.now(tz)
+    now = datetime.datetime.now(tz)
     print("End at " + str(now))
+    # print(now.strftime('%Y-%m-%d %H:%M:%S %Z'))
 
     return {"message": "Value R1 created"}
