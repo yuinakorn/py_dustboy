@@ -14,13 +14,6 @@ config_env = {
 
 app = FastAPI()
 
-connection = pymysql.connect(host=config_env['HOST'],
-                             user=config_env['USER_DB'],
-                             password=config_env['PASSWORD_DB'],
-                             db=config_env['DB_NAME'],
-                             port=int(config_env["PORT"]),
-                             charset='utf8')
-
 
 # cursor = connection.cursor()
 
@@ -32,6 +25,12 @@ async def root():
 @app.post("/station/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_station(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
+        connection = pymysql.connect(host=config_env['HOST'],
+                                     user=config_env['USER_DB'],
+                                     password=config_env['PASSWORD_DB'],
+                                     db=config_env['DB_NAME'],
+                                     port=int(config_env["PORT"]),
+                                     charset='utf8')
         try:
             with connection.cursor() as cursor:
                 url = "https://www.cmuccdc.org/api/ccdc/stations"
@@ -74,7 +73,13 @@ async def create_station(request_key: str = Form()):
 @app.post("/value/all/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_value_all(request_key: str = Form()):
     if request_key == config_env['SECRET_KEY']:
-        print(request_key)
+        connection = pymysql.connect(host=config_env['HOST'],
+                                     user=config_env['USER_DB'],
+                                     password=config_env['PASSWORD_DB'],
+                                     db=config_env['DB_NAME'],
+                                     port=int(config_env["PORT"]),
+                                     charset='utf8')
+        # print(request_key)
         try:
             url = "https://www.cmuccdc.org/api/ccdc/stations"
             payload = {}
@@ -128,8 +133,13 @@ async def create_value_all(request_key: str = Form()):
 
 @app.post("/value/r1/", status_code=status.HTTP_201_CREATED, tags=["Dustboy"])
 async def create_value_r1(request_key: str = Form()):
-
     if request_key == config_env['SECRET_KEY']:
+        connection = pymysql.connect(host=config_env['HOST'],
+                                     user=config_env['USER_DB'],
+                                     password=config_env['PASSWORD_DB'],
+                                     db=config_env['DB_NAME'],
+                                     port=int(config_env["PORT"]),
+                                     charset='utf8')
         tz = pytz.timezone('Asia/Bangkok')
         now = datetime.datetime.now(tz)
         print("Start at " + str(now))
